@@ -116,7 +116,7 @@ class GeneticAlgorithm:
 
         return max(population)
 
-gp = GeneticAlgorithm([13,1,3,5,4,7,6,9,10,8,12,11,2,15,16,14,20,18,17,19], population_size=200, num_generations=200, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, crossover_type='', search_localy=True)
+gp = GeneticAlgorithm([23,1,2,11,24,22,19,6,10,7,25,20,5,8,18,12,13,14,15,16,17,21,3,4,9], population_size=200, num_generations=300, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, crossover_type='', search_localy=True)
 solution = gp.solve()
 print(len(solution.reversals))
 

@@ -42,7 +42,7 @@ def vns(permutation, max_iter:int = 200, k_min:int = 0, k_max:int = 3, move_prob
     return len(best_revs), best_revs
 
 
-perm = [13,1,3,5,4,7,6,9,10,8,12,11,2]
+perm = [23,1,2,11,24,22,19,6,10,7,25,20,5,8,18,12,13,14,15,16,17,21,3,4,9]
 best = 10000
 best_revs = None
 

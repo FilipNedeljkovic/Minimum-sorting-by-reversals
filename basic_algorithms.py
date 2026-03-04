@@ -43,20 +43,33 @@ def upper_bound_estimate(permutation):
     n = len(permutation)
     count = 0
 
-    while perm != sorted_perm:
-        best_num_bp = float('inf')
-        best_perm = None
+    while True:
+        num_bp = count_breakpoints(perm)
+        if num_bp == 0:
+            break
+
+        best_move = None
+        best_red = 0
 
         for i in range(n - 1):
             for j in range(i + 1, n):
                 new_perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
-                num_bp = count_breakpoints(new_perm)
+                new_num_bp = count_breakpoints(new_perm)
+                reduction = num_bp - new_num_bp
                 
-                if num_bp < best_num_bp:
-                    best_num_bp = num_bp
-                    best_perm = new_perm
-        
-        perm = best_perm
+                if reduction > best_red:
+                    best_red = reduction
+                    best_move = (i, j)
+
+                if reduction == 2:
+                    break
+
+            if best_red == 2:
+                break
+
+        assert best_move is not None
+        i, j = best_move
+        perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
         count += 1
 
     return count

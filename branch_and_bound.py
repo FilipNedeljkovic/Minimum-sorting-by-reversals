@@ -38,3 +38,6 @@ def branch_and_bound(permutation):
                 stack.append((new_perm, count + 1, reversals + [reversal]))
 
     return upper_bound
+
+
+print(branch_and_bound([13,1,3,5,4,7,6,9,10,8,12,11,2,15,16,14,20,18,17,19]))
