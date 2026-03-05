@@ -22,14 +22,14 @@ def shake(reversals, n:int, k:int):
 
     return revs
 
-def vns(permutation, max_iter:int = 200, k_min:int = 0, k_max:int = 3, move_prob:float = 0.5):
+def vns(permutation, max_iter:int = 200, k_min:int = 1, k_max:int = 3, move_prob:float = 0.5):
     start_perm = tuple(permutation)
     n = len(permutation)
     best_revs = local_search(start_perm, [], 5)
     best_value = calc_value(start_perm, best_revs)
 
     for _ in range(max_iter):
-        for k in range(k_min, k_max):
+        for k in range(k_min, k_max + 1):
             new_revs = shake(best_revs, n, k)
             new_revs = local_search(start_perm, new_revs, 5)
             new_value = calc_value(start_perm, new_revs)
@@ -41,21 +41,3 @@ def vns(permutation, max_iter:int = 200, k_min:int = 0, k_max:int = 3, move_prob
     
     return len(best_revs), best_revs
 
-
-perm = [23,1,2,11,24,22,19,6,10,7,25,20,5,8,18,12,13,14,15,16,17,21,3,4,9]
-best = 10000
-best_revs = None
-
-for h in range(10):
-    value, revs = vns(perm, max_iter=5000, k_max=10)
-    if value < best:
-        best = value   
-        best_revs = revs 
-    print(h, value)
-
-for i, j in best_revs:
-    perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
-
-print(best)
-print(perm)
-print(count_breakpoints(tuple(perm)) == 0)

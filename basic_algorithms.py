@@ -6,22 +6,22 @@ def bfs(permutation) -> int:
     start_perm = tuple(permutation)
     sorted_perm = tuple(sorted(start_perm))
     visited = {start_perm}
-    queue = deque([(start_perm, 0)])
+    queue = deque([(start_perm, 0, [])])
     n = len(permutation)
 
     while len(queue) > 0:
-        perm, count = queue.popleft()
+        perm, count, reversals = queue.popleft()
 
         for i in range(n - 1):
             for j in range(i + 1, n):
                 new_perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
 
                 if new_perm == sorted_perm:
-                    return count + 1
+                    return count + 1, reversals + [(i, j)]
 
                 if new_perm not in visited:
                     visited.add(new_perm)
-                    queue.append((new_perm, count + 1))
+                    queue.append((new_perm, count + 1, reversals + [(i, j)]))
 
     return -1
 
@@ -42,6 +42,7 @@ def upper_bound_estimate(permutation):
     sorted_perm = tuple(sorted(permutation))
     n = len(permutation)
     count = 0
+    reversals = []
 
     while True:
         num_bp = count_breakpoints(perm)
@@ -70,9 +71,10 @@ def upper_bound_estimate(permutation):
         assert best_move is not None
         i, j = best_move
         perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
+        reversals.append(best_move)
         count += 1
 
-    return count
+    return count, reversals
 
 def improving_reversals(permutation):
     n = len(permutation)

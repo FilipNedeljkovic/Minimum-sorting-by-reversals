@@ -28,7 +28,7 @@ class Individual:
 
 class GeneticAlgorithm:
     def __init__(self, permutation, population_size:int, num_generations:int, mutation_prob:float, elitism_size:float, 
-                crossover_type:str, selection_type:str, tournament_size:int|None, search_localy:bool = False):
+                selection_type:str, tournament_size:int|None, search_localy:bool = False):
         self.permutation = tuple(permutation)
         self.population_size = population_size
         self.num_generations = num_generations
@@ -39,7 +39,6 @@ class GeneticAlgorithm:
             self.num_elite += 1
 
         self.tournament_size = tournament_size
-        self.crossover_type = crossover_type
         self.selection_type = selection_type
         self.search_localy = search_localy
 
@@ -85,7 +84,7 @@ class GeneticAlgorithm:
         return code
 
     def solve(self) -> Individual:
-        upper_bound = upper_bound_estimate(self.permutation)
+        upper_bound, _ = upper_bound_estimate(self.permutation)
         population = [Individual(self.permutation, upper_bound) for _ in range(self.population_size)]
 
         for h in range(self.num_generations):
@@ -116,13 +115,3 @@ class GeneticAlgorithm:
 
         return max(population)
 
-gp = GeneticAlgorithm([23,1,2,11,24,22,19,6,10,7,25,20,5,8,18,12,13,14,15,16,17,21,3,4,9], population_size=200, num_generations=300, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, crossover_type='', search_localy=True)
-solution = gp.solve()
-print(len(solution.reversals))
-
-perm = solution.permutation
-for i, j in solution.reversals:
-    perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
-
-print(perm)
-print(count_breakpoints(perm) == 0)

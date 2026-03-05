@@ -3,7 +3,7 @@ from basic_algorithms import *
 def branch_and_bound(permutation):
     start_perm = tuple(permutation)
     sorted_perm = tuple(sorted(permutation))
-    upper_bound = upper_bound_estimate(permutation)
+    upper_bound, revs = upper_bound_estimate(permutation)
     
     stack = deque([(start_perm, 0, [])])
     visited = {start_perm: 0}
@@ -19,6 +19,7 @@ def branch_and_bound(permutation):
 
         if perm == sorted_perm:
             upper_bound = count
+            revs = reversals
             print(reversals)
             continue
 
@@ -37,7 +38,11 @@ def branch_and_bound(permutation):
                 visited[new_perm] = count + 1
                 stack.append((new_perm, count + 1, reversals + [reversal]))
 
-    return upper_bound
+    return upper_bound, revs
 
+value, reversals = branch_and_bound([3, 2, 5, 4, 7, 1, 6])
+perm = [3, 2, 5, 4, 7, 1, 6]
+for i, j in reversals:
+    perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
 
-print(branch_and_bound([13,1,3,5,4,7,6,9,10,8,12,11,2,15,16,14,20,18,17,19]))
+print(value, perm)
