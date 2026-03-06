@@ -110,7 +110,7 @@ def test_small_data(test_directory):
 
         start = time.perf_counter()
         gp = GeneticAlgorithm(instance, population_size=200, num_generations=100, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, search_localy=True)
-        solution = gp.solve()
+        solution, _ = gp.solve()
         num_reversals = len(solution.reversals)
         reversals = solution.reversals
         end = time.perf_counter()
@@ -213,7 +213,7 @@ def test_medium_data(test_directory):
 
         start = time.perf_counter()
         gp = GeneticAlgorithm(instance, population_size=200, num_generations=200, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, search_localy=True)
-        solution = gp.solve()
+        solution, _ = gp.solve()
         num_reversals = len(solution.reversals)
         reversals = solution.reversals
         end = time.perf_counter()
@@ -302,8 +302,8 @@ def test_large_data(test_directory):
         }
 
         start = time.perf_counter()
-        gp = GeneticAlgorithm(instance, population_size=200, num_generations=200, mutation_prob=0.1, elitism_size=0.1, selection_type="tournament", tournament_size=10, search_localy=True)
-        solution = gp.solve()
+        gp = GeneticAlgorithm(instance, population_size=200, num_generations=400, mutation_prob=0.1, elitism_size=0.15, selection_type="tournament", tournament_size=10, search_localy=True)
+        solution, _ = gp.solve()
         num_reversals = len(solution.reversals)
         reversals = solution.reversals
         end = time.perf_counter()

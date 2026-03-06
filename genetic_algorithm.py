@@ -14,7 +14,6 @@ class Individual:
         
         self.permutation = permutation
         self.fitness = self.calc_fitness()
-        self.best_fitnesses = []
 
     def calc_fitness(self):
         perm = self.permutation
@@ -42,6 +41,7 @@ class GeneticAlgorithm:
         self.tournament_size = tournament_size
         self.selection_type = selection_type
         self.search_localy = search_localy
+        self.best_fitnesses = []
 
         if selection_type == 'tournament':
             assert tournament_size is not None
@@ -87,6 +87,7 @@ class GeneticAlgorithm:
     def solve(self) -> Individual:
         upper_bound, _ = upper_bound_estimate(self.permutation)
         population = [Individual(self.permutation, upper_bound) for _ in range(self.population_size)]
+        best_fitnesses = []
 
         for h in range(self.num_generations):
             population.sort(reverse=True)
@@ -112,7 +113,7 @@ class GeneticAlgorithm:
                 new_population.append(child2)
 
             population = new_population.copy()
-            self.best_fitnesses.append(max(population).fitness)
+            best_fitnesses.append(max(population).fitness)
 
-        return max(population)
+        return max(population), best_fitnesses
 
