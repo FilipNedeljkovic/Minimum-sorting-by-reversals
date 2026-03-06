@@ -19,8 +19,6 @@ def branch_and_bound(permutation):
 
         if perm == sorted_perm:
             upper_bound = count
-            revs = reversals
-            print(reversals)
             continue
 
         candidates = []
@@ -39,10 +37,3 @@ def branch_and_bound(permutation):
                 stack.append((new_perm, count + 1, reversals + [reversal]))
 
     return upper_bound, revs
-
-value, reversals = branch_and_bound([3, 2, 5, 4, 7, 1, 6])
-perm = [3, 2, 5, 4, 7, 1, 6]
-for i, j in reversals:
-    perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
-
-print(value, perm)

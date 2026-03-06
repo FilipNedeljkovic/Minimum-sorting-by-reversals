@@ -27,6 +27,7 @@ def vns(permutation, max_iter:int = 200, k_min:int = 1, k_max:int = 3, move_prob
     n = len(permutation)
     best_revs = local_search(start_perm, [], 5)
     best_value = calc_value(start_perm, best_revs)
+    values = []
 
     for _ in range(max_iter):
         for k in range(k_min, k_max + 1):
@@ -38,6 +39,8 @@ def vns(permutation, max_iter:int = 200, k_min:int = 1, k_max:int = 3, move_prob
                 best_value = new_value
                 best_revs = new_revs
                 break
+
+        values.append(best_value)
     
-    return len(best_revs), best_revs
+    return len(best_revs), best_revs, values
 

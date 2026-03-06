@@ -5,7 +5,7 @@ class Individual:
     def __init__(self, permutation, upper_bound:int, reversals = None):
         if reversals is not None:
             self.reversals = reversals
-        else:
+        elif upper_bound > 0:
             length = random.randint(1, upper_bound)
             n = len(permutation)
             i = random.randint(0, n-2)
@@ -14,6 +14,7 @@ class Individual:
         
         self.permutation = permutation
         self.fitness = self.calc_fitness()
+        self.best_fitnesses = []
 
     def calc_fitness(self):
         perm = self.permutation
@@ -88,7 +89,6 @@ class GeneticAlgorithm:
         population = [Individual(self.permutation, upper_bound) for _ in range(self.population_size)]
 
         for h in range(self.num_generations):
-            print(h)
             population.sort(reverse=True)
             new_population = population[:self.num_elite]
 
@@ -112,6 +112,7 @@ class GeneticAlgorithm:
                 new_population.append(child2)
 
             population = new_population.copy()
+            self.best_fitnesses.append(max(population).fitness)
 
         return max(population)
 

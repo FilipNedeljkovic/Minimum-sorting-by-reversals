@@ -50,9 +50,9 @@ def upper_bound_estimate(permutation):
             break
 
         best_move = None
-        best_red = 0
+        best_red = -n
 
-        for i in range(n - 1):
+        for i in range(n - 1): 
             for j in range(i + 1, n):
                 new_perm = perm[:i] + perm[i:j+1][::-1] + perm[j+1:]
                 new_num_bp = count_breakpoints(new_perm)
@@ -109,5 +109,3 @@ def local_search(permutation, reversals, max_steps=3):
             reversals.append(move)
 
         return reversals
-
-
